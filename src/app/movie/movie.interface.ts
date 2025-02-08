@@ -7,9 +7,10 @@ export type TReview = {
 export type TMovie = {
   title: string;
   description: string;
-  releaseDate: Date;
+  // releaseDate: Date;
+  releaseDate: string;
   genre: string;
-  reviews: [TReview];
+  reviews: TReview[];
   viewCount: number;
   isDeleted?: boolean;
 };

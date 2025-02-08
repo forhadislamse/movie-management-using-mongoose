@@ -3,6 +3,7 @@ import { TMovie, TReview } from './movie.interface';
 
 const reviewSchema = new Schema<TReview>({
   email: { type: String, required: true },
+  //pre hook for unique email
   rating: { type: Number, required: true, min: 1, max: 5 },
   comment: { type: String, required: true },
 });
@@ -11,7 +12,8 @@ const reviewSchema = new Schema<TReview>({
 const movieSchema = new Schema<TMovie>({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  releaseDate: { type: Date, required: true },
+  // releaseDate: { type: Date, required: true },
+  releaseDate: { type: String, required: true },
   genre: { type: String, required: true },
   reviews: { type: [reviewSchema], default: [] },
   viewCount: { type: Number, default: 0 },
