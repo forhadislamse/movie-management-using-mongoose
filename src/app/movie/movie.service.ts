@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { TMovie } from './movie.interface';
 import { Movie } from './movie.model';
 
@@ -12,13 +13,22 @@ const getAllMoviesFromDb = async () => {
 };
 
 const getMoviesById = async (_id: string) => {
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    // Validate ObjectId format
+    throw new Error('Invalid Movie ID format');
+  }
   const result = await Movie.findById({ _id });
   return result;
 };
 
-const updateMoviesIntoDb = async (_id: string, updates: Partial<TMovie>) => {
+const getMovieBySlugFromDb = async (slug: string) => {
+  const result = await Movie.findOne({ slug: slug });
+  return result;
+};
+
+const updateMoviesIntoDb = async (id: string, updates: Partial<TMovie>) => {
   const result = await Movie.findOneAndUpdate(
-    { _id, isDeleted: false },
+    { _id: id, isDeleted: false },
     updates,
     { new: true, runValidators: true },
   );
@@ -32,5 +42,6 @@ export const MovieServices = {
   createMovieIntoDb,
   getAllMoviesFromDb,
   getMoviesById,
+  getMovieBySlugFromDb,
   updateMoviesIntoDb,
 };

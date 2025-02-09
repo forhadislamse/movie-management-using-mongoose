@@ -19,6 +19,7 @@ const movieValidationSchema = z.object({
     .datetime({ message: 'Invalid datetime string! Must be UTC.' }),
   genre: z.string().min(1, { message: 'Genre is required' }),
   reviews: z.array(reviewValidationSchema).default([]),
+  slug: z.string().optional(),
   viewCount: z.number().int().nonnegative().default(0),
   isDeleted: z.boolean().optional(),
 });

@@ -57,6 +57,24 @@ const getSingleMovies = async (req: Request, res: Response) => {
   }
 };
 
+const getMovieBySlug = async (req: Request, res: Response) => {
+  try {
+    const { slug } = req.params;
+    const result = await MovieServices.getMovieBySlugFromDb(slug);
+    res.status(200).json({
+      success: true,
+      message: 'get single movie data successfully',
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      success: false,
+      message: err.message || 'something went wrong',
+      error: err,
+    });
+  }
+};
+
 const updateMovies = async (req: Request, res: Response) => {
   try {
     const { movieId } = req.params;
@@ -80,5 +98,6 @@ export const MovieControllers = {
   createMovie,
   getAllMovies,
   getSingleMovies,
+  getMovieBySlug,
   updateMovies,
 };
